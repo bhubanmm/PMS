@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pmsModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;D:\BITS\Project\Parking Management System\Pms.Data\App_Data\pms.sqlite&quot;;password=Infosys123" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Camera">
+          <Key>
+            <PropertyRef Name="CameraId" />
+          </Key>
+          <Property Name="CameraId" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CameraName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RelatedParkingId" Type="integer" Nullable="false" />
+          <Property Name="SecurityKey" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="ParkingID" />
+          </Key>
+          <Property Name="ParkingID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ParkingName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalSlots" Type="integer" />
+          <Property Name="SlotsUnderMaintenance" Type="integer" />
+          <Property Name="SlotsOccupied" Type="integer" />
+        </EntityType>
+        <Association Name="FK_Camera_0_0">
+          <End Role="Parking" Type="Self.Parking" Multiplicity="1" />
+          <End Role="Camera" Type="Self.Camera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parking">
+              <PropertyRef Name="ParkingID" />
+            </Principal>
+            <Dependent Role="Camera">
+              <PropertyRef Name="RelatedParkingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pmsModelStoreContainer">
+          <EntitySet Name="Camera" EntityType="Self.Camera" store:Type="Tables" />
+          <EntitySet Name="Parking" EntityType="Self.Parking" store:Type="Tables" />
+          <AssociationSet Name="FK_Camera_0_0" Association="Self.FK_Camera_0_0">
+            <End Role="Parking" EntitySet="Parking" />
+            <End Role="Camera" EntitySet="Camera" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pmsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Camera">
+          <Key>
+            <PropertyRef Name="CameraId" />
+          </Key>
+          <Property Name="CameraId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CameraName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RelatedParkingId" Type="Int64" Nullable="false" />
+          <Property Name="SecurityKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Parking" Relationship="Self.FK_Camera_0_0" FromRole="Camera" ToRole="Parking" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="ParkingID" />
+          </Key>
+          <Property Name="ParkingID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParkingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalSlots" Type="Int64" />
+          <Property Name="SlotsUnderMaintenance" Type="Int64" />
+          <Property Name="SlotsOccupied" Type="Int64" />
+          <NavigationProperty Name="Cameras" Relationship="Self.FK_Camera_0_0" FromRole="Parking" ToRole="Camera" />
+        </EntityType>
+        <Association Name="FK_Camera_0_0">
+          <End Role="Parking" Type="Self.Parking" Multiplicity="1" />
+          <End Role="Camera" Type="Self.Camera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parking">
+              <PropertyRef Name="ParkingID" />
+            </Principal>
+            <Dependent Role="Camera">
+              <PropertyRef Name="RelatedParkingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pmsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cameras" EntityType="Self.Camera" />
+          <EntitySet Name="Parkings" EntityType="Self.Parking" />
+          <AssociationSet Name="FK_Camera_0_0" Association="Self.FK_Camera_0_0">
+            <End Role="Parking" EntitySet="Parkings" />
+            <End Role="Camera" EntitySet="Cameras" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pmsModelStoreContainer" CdmEntityContainer="pmsEntities">
+          <EntitySetMapping Name="Cameras">
+            <EntityTypeMapping TypeName="pmsModel.Camera">
+              <MappingFragment StoreEntitySet="Camera">
+                <ScalarProperty Name="CameraId" ColumnName="CameraId" />
+                <ScalarProperty Name="CameraName" ColumnName="CameraName" />
+                <ScalarProperty Name="RelatedParkingId" ColumnName="RelatedParkingId" />
+                <ScalarProperty Name="SecurityKey" ColumnName="SecurityKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parkings">
+            <EntityTypeMapping TypeName="pmsModel.Parking">
+              <MappingFragment StoreEntitySet="Parking">
+                <ScalarProperty Name="ParkingID" ColumnName="ParkingID" />
+                <ScalarProperty Name="ParkingName" ColumnName="ParkingName" />
+                <ScalarProperty Name="TotalSlots" ColumnName="TotalSlots" />
+                <ScalarProperty Name="SlotsUnderMaintenance" ColumnName="SlotsUnderMaintenance" />
+                <ScalarProperty Name="SlotsOccupied" ColumnName="SlotsOccupied" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+    <link href="Content/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/jquery-ui-1.10.0.min.js"></script>
+    <script src="Scripts/i18n/grid.locale-en.js"></script>
+    <script src="Scripts/jquery.jqGrid.js"></script>
+</head>
+<body>
+    <table id="gridMain"></table>
+    <div id="pagernav">
+    </div>
+    <script type="text/javascript">
+        var API_URL = "http://localhost:60954/odata/Parking";
+        grid = $("#gridMain");
+
+        $.get(API_URL, function (data) {
+            console.log(JSON.stringify(data.value));
+        });
+
+        grid.jqGrid({
+            url: API_URL,
+            datatype: 'json',
+            /*loadonce: true,*/
+            jsonReader: {
+                root: "value",
+                id: "ParkingID",
+                page: function (obj) { return grid.jqGrid('getGridParam', 'pagernav'); },
+                total: function (obj) { return Math.ceil(obj.length / grid.jqGrid('getGridParam', 'rowNum')); },
+                records: function (obj) { return obj.length; },
+                repeatitems: false
+            },
+            prmNames: {
+                id: "ParkingID"
+            },
+            mtype: 'GET',
+            pager: '#pagernav',
+            rownumbers: true,
+            sortable: true,
+            height: 200,
+            viewrecords: true,
+            colNames: ['Parking ID', 'Parking Name', 'Total Slots', 'Slots Under Maintenance', 'Slots Occupied'],
+            colModel: [{ name: 'ParkingID', index: 'ParkingID', width: 40, sorttype: "int", key: true },
+             { name: 'ParkingName', index: 'ParkingName', editable: true, edittype: 'text', width: 70 },
+             { name: 'TotalSlots', index: 'TotalSlots', editable: true, edittype: 'text', width: 40, align: "right", sorttype: "int" },
+             { name: 'SlotsUnderMaintenance', index: 'SlotsUnderMaintenance', editable: true, edittype: 'text', width: 50, align: "right", sorttype: "int" },
+             { name: 'SlotsOccupied', index: 'SlotsOccupied', editable: true, edittype: 'text', width: 50, align: "right", sorttype: "int" }
+            ],
+            caption: "Parking Administration",
+            autowidth: true,
+            searchtext: "Search",
+            addtext: "Add",
+            edittext: "Edit",
+            deltext: "Delete"
+        });
+
+        function updateDialog(action) {
+            return {
+                url: API_URL
+                , closeAfterAdd: true
+                , closeAfterEdit: true
+                , afterShowForm: function (formId) { }
+                , modal: true
+                , serializeEditData: function (data) {
+                    if (data.ParkingID == "_empty")
+                        delete data["ParkingID"];
+                    return $.param(data);
+                }
+                , width: "500"
+                , afterShowForm: function ($form) {
+                    setTimeout(function () {
+                        $form.closest(".ui-jqdialog").closest(".ui-jqdialog").position({
+                            my: 'center',
+                            at: 'center',
+                            of: window
+                        });
+                    }, 50);
+                }
+                , onclickSubmit: function (params) {
+                    if (action == "DELETE") {
+                        var selectedRow = grid.getGridParam("selrow");
+                        rowData = grid.getRowData(selectedRow);
+                        params.url += "(" + rowData.ParkingID + ")";
+                    }
+                    params.mtype = action;
+                }
+                /*, errorTextFormat: function (response) {
+                    return JSON.stringify(response);
+                }*/
+            };
+        }
+
+        grid.jqGrid('navGrid', '#pagernav',
+              { add: true, edit: true, del: true },
+              updateDialog('POST'),
+              updateDialog('POST'),
+              updateDialog('DELETE')
+      );
+    </script>
+</body>
+</html>
