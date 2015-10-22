@@ -32,9 +32,11 @@
         });
 
         function setupGrid(data) {
+            var grid = $("#gridMain");
             $("#gridMain").jqGrid({
                 url: API_URL,
                 datatype: 'json',
+                loadonce: true,
                 jsonReader: {
                     root: "value",
                     id: "CameraId",
@@ -49,8 +51,9 @@
                 mtype: 'GET',
                 pager: '#pagernav',
                 rownumbers: true,
+                rowNum: 10,
                 sortable: true,
-                height: 200,
+                height: 300,
                 viewrecords: true,
                 colNames: ['Camera ID', 'Camera Name', 'Related Parking Area'],
                 colModel: [
@@ -80,14 +83,11 @@
                     }
                 ],
                 caption: "Camera Administration",
-                autowidth: true,
-                searchtext: "Search",
-                addtext: "Add",
-                edittext: "Edit",
-                deltext: "Delete"
+                autowidth: true
             });
 
             function updateDialog(action) {
+                var curPage = grid.getGridParam("page");
                 return {
                     url: API_URL
                     , closeAfterAdd: true
@@ -101,21 +101,29 @@
                     }
                     , width: "500"
                     , afterShowForm: function ($form) {
-                        setTimeout(function () {
+                        //setTimeout(function () {
                             $form.closest(".ui-jqdialog").closest(".ui-jqdialog").position({
                                 my: 'center',
                                 at: 'center',
                                 of: window
                             });
-                        }, 50);
+                        //}, 50);
                     }
                     , onclickSubmit: function (params) {
+                        curPage = grid.getGridParam("page");
                         if (action == "DELETE") {
                             var selectedRow = grid.getGridParam("selrow");
                             rowData = grid.getRowData(selectedRow);
                             params.url += "(" + rowData.CameraId + ")";
                         }
                         params.mtype = action;
+                    }
+                    , afterSubmit: function () {
+                        grid.jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                        return [true, '']; // no error
+                    }
+                    , afterComplete: function () {
+                        grid.trigger("reloadGrid", [{ page: curPage }]);
                     }
                     /*, errorTextFormat: function (response) {
                         return JSON.stringify(response);
@@ -124,10 +132,34 @@
             }
 
             $("#gridMain").jqGrid('navGrid', '#pagernav',
-                  { add: true, edit: true, del: true },
+                  {
+                      add: true,
+                      edit: true,
+                      del: true,
+                      //search: false,
+                      addtext: 'Add',
+                      edittext: 'Edit',
+                      deltext: 'Delete',
+                      searchtext: 'Search',
+                      refreshtext: 'Reload',
+                      viewtext: 'View'
+                  },
                   updateDialog('POST'),
                   updateDialog('POST'),
-                  updateDialog('DELETE')
+                  updateDialog('DELETE'),
+                  {
+                      multipleSearch: true,
+                      closeAfterSearch: true,
+                      beforeShowSearch: function ($form) {
+                          $('#searchmodfbox_gridMain').width(600);
+                          $('#searchmodfbox_gridMain').position({
+                              my: 'center',
+                              at: 'center',
+                              of: window
+                          });
+                          return true;
+                      }
+                  }
             );
         }
     </script>

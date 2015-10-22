@@ -16,16 +16,16 @@
     </div>
     <script type="text/javascript">
         var API_URL = "http://localhost:60954/odata/Parking";
-        grid = $("#gridMain");
+        var grid = $("#gridMain");
 
-        $.get(API_URL, function (data) {
+        /*$.get(API_URL, function (data) {
             console.log(JSON.stringify(data.value));
-        });
+        });*/
 
         grid.jqGrid({
             url: API_URL,
             datatype: 'json',
-            /*loadonce: true,*/
+            loadonce: true,
             jsonReader: {
                 root: "value",
                 id: "ParkingID",
@@ -39,9 +39,10 @@
             },
             mtype: 'GET',
             pager: '#pagernav',
+            rowNum: 10,
             rownumbers: true,
             sortable: true,
-            height: 200,
+            height: 300,
             viewrecords: true,
             colNames: ['Parking ID', 'Parking Name', 'Total Slots', 'Slots Under Maintenance', 'Slots Occupied'],
             colModel: [{ name: 'ParkingID', index: 'ParkingID', width: 40, sorttype: "int", key: true },
@@ -51,19 +52,15 @@
              { name: 'SlotsOccupied', index: 'SlotsOccupied', editable: true, edittype: 'text', width: 50, align: "right", sorttype: "int" }
             ],
             caption: "Parking Administration",
-            autowidth: true,
-            searchtext: "Search",
-            addtext: "Add",
-            edittext: "Edit",
-            deltext: "Delete"
+            autowidth: true
         });
 
         function updateDialog(action) {
+            var curPage = grid.getGridParam("page");
             return {
                 url: API_URL
                 , closeAfterAdd: true
                 , closeAfterEdit: true
-                , afterShowForm: function (formId) { }
                 , modal: true
                 , serializeEditData: function (data) {
                     if (data.ParkingID == "_empty")
@@ -72,21 +69,30 @@
                 }
                 , width: "500"
                 , afterShowForm: function ($form) {
-                    setTimeout(function () {
+                    //setTimeout(function () {
                         $form.closest(".ui-jqdialog").closest(".ui-jqdialog").position({
                             my: 'center',
                             at: 'center',
                             of: window
                         });
-                    }, 50);
+                    //}, 50);
                 }
                 , onclickSubmit: function (params) {
+                    curPage = grid.getGridParam("page");
                     if (action == "DELETE") {
                         var selectedRow = grid.getGridParam("selrow");
                         rowData = grid.getRowData(selectedRow);
                         params.url += "(" + rowData.ParkingID + ")";
                     }
                     params.mtype = action;
+                }
+                , afterSubmit: function () {
+                    grid.jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid', [{ page: curPage }]);
+                    return [true, '']; // no error
+                }
+                , afterComplete: function () {
+                    console.log(curPage);
+                    grid.trigger("reloadGrid", [{ page: curPage }]);
                 }
                 /*, errorTextFormat: function (response) {
                     return JSON.stringify(response);
@@ -95,10 +101,33 @@
         }
 
         grid.jqGrid('navGrid', '#pagernav',
-              { add: true, edit: true, del: true },
+              {
+                  add: true,
+                  edit: true,
+                  del: true,
+                  addtext: 'Add',
+                  edittext: 'Edit',
+                  deltext: 'Delete',
+                  searchtext: 'Search',
+                  refreshtext: 'Reload',
+                  viewtext: 'View'
+              },
               updateDialog('POST'),
               updateDialog('POST'),
-              updateDialog('DELETE')
+              updateDialog('DELETE'),
+              {
+                  multipleSearch: true,
+                  closeAfterSearch: true,
+                  beforeShowSearch: function ($form) {
+                      $('#searchmodfbox_gridMain').width(600);
+                      $('#searchmodfbox_gridMain').position({
+                          my: 'center',
+                          at: 'center',
+                          of: window
+                      });
+                      return true;
+                  }
+              }
       );
     </script>
 </body>
