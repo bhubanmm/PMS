@@ -5,14 +5,22 @@
     <meta charset="utf-8" />
     <link href="Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
     <link href="Content/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-    <script src="Scripts/jquery-1.9.1.min.js"></script>
-    <script src="Scripts/jquery-ui-1.10.0.min.js"></script>
-    <script src="Scripts/i18n/grid.locale-en.js"></script>
-    <script src="Scripts/jquery.jqGrid.js"></script>
+    <link href="Content/custom.css" rel="stylesheet" />
+    <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-ui-1.10.0.min.js"></script>
+    <script type="text/javascript" src="Scripts/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.jqGrid.js"></script>
+    <script type="text/javascript" src="Scripts/custom.js"></script>
 </head>
 <body>
-    <table id="gridMain"></table>
-    <div id="pagernav">
+    <div id="pms-wrapper">
+        <div id="pms-header"></div>
+        <div id="pms-body">
+            <table id="gridMain"></table>
+            <div id="pagernav">
+            </div>
+        </div>
+        <div id="pms-footer"></div>
     </div>
     <script type="text/javascript">
         var API_URL = "http://localhost:60954/odata/Parking";

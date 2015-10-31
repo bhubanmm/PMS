@@ -179,7 +179,12 @@
     <Content Include="Models\PmsModel.edmx.diagram">
       <DependentUpon>PmsModel.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Data\pms.sqlite" />
+    <Content Include="App_Data\pms.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pms.Data.cd" />
+    <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\bhubanmishra.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

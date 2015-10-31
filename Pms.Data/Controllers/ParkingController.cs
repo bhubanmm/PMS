@@ -27,7 +27,7 @@ namespace Pms.Data.Controllers
     builder.EntitySet<Camera>("Cameras"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [EnableCors(origins: "http://localhost:59161", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ParkingController : ODataController
     {
         private pmsEntities db = new pmsEntities();

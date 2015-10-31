@@ -66,8 +66,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="about.html" />
+    <Content Include="Content\custom.css" />
+    <Content Include="Content\logo.png" />
+    <Content Include="dashboard.html" />
+    <Content Include="footer.html" />
+    <Content Include="header.html" />
+    <Content Include="index.html" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <None Include="Properties\PublishProfiles\bhubanmishra.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

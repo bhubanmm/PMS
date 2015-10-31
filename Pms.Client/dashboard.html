@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/custom.css" rel="stylesheet" />
+    <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/custom.js"></script>
+    <style type="text/css">
+        #pms-nav {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="pms-wrapper">
+        <div id="pms-header"></div>
+        <div id="pms-body">
+            <div id="pms-map">
+                <h4>Schematic map of Infosys Bhubaneswar DC</h4>
+                <iframe id="frmMap" height="450" width="500" scrolling="no" src=""></iframe>
+            </div>
+        </div>
+        <div id="pms-footer"></div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var mapUrl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Road/20.341,85.8031/17?ms=500,450&key=AvzA0mBNEOU_n-KKYd8xA5iTb-qC2kCtA-8NSy-ySISxjdDfEIX5auA6j2rJ3Evo";
+
+            var pushpins = [];
+            pushpins.push('pp=20.3429,85.8044;;G1');
+            pushpins.push('pp=20.34085,85.8008;;G2');
+            pushpins.push('pp=20.3422,85.8042;46;10');
+
+            //var postData = pushpins.join('&');
+
+            var url = mapUrl + "&" + pushpins.join('&');
+            
+            $("#frmMap").prop("src", url);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/custom.css" rel="stylesheet" />
+    <style type="text/css">
+        #pms-nav {
+            display: none;
+        }
+
+        #divMap {
+            position: relative;
+            height: 450px;
+            width: 500px;
+            margin: auto;
+        }
+    </style>
+
+    <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/custom.js"></script>
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript">
+        var map = null;
+
+        function getMap() {
+            map = new Microsoft.Maps.Map(document.getElementById('divMap'), {
+                credentials: 'AvzA0mBNEOU_n-KKYd8xA5iTb-qC2kCtA-8NSy-ySISxjdDfEIX5auA6j2rJ3Evo',
+                labelOverlay: Microsoft.Maps.LabelOverlay.hidden,
+                enableSearchLogo: false,
+                enableClickableLogo: false,
+                showDashboard: false,
+                disablePanning: true,
+                disableZooming: true,
+                mapTypeId : Microsoft.Maps.MapTypeId.road,
+                zoom: 17,
+                center: new Microsoft.Maps.Location(20.341, 85.8031)
+            });
+
+            var gate1 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.34287, 85.8043),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;font-weight:bold;border:solid 1px;background-color:LightBlue;width:20px;'>G1</div>"
+                });
+            map.entities.push(gate1);
+
+            var gate2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(20.34095, 85.8008), {
+                width: null,
+                height: null,
+                htmlContent: "<div style='font-size:12px;font-weight:bold;border:solid 1px;background-color:LightBlue;width:20px;'>G2</div>"
+            });
+            map.entities.push(gate2);
+
+            var p1 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3423, 85.804),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>10</div>"
+                });
+            map.entities.push(p1);
+
+            var p2 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.34285, 85.8035),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
+                });
+            map.entities.push(p2);
+
+            var p3 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.34285, 85.802),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
+                });
+            map.entities.push(p3);
+
+            var p3 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.34285, 85.802),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
+                });
+            map.entities.push(p3);
+
+            var p4 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3426, 85.8009),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>20</div>"
+                });
+            map.entities.push(p4);
+
+            var p5 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3415, 85.8009),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>15</div>"
+                });
+            map.entities.push(p5);
+
+            var p6 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3402, 85.8009),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>25</div>"
+                });
+            map.entities.push(p6);
+
+            var p7 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3393, 85.802),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>17</div>"
+                });
+            map.entities.push(p7);
+
+            var p8 = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(20.3399, 85.8035),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
+                });
+            map.entities.push(p8);
+
+            var p9 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(20.34095, 85.802), {
+                width: null,
+                height: null,
+                htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
+            });
+            map.entities.push(p9);
+        }
+
+    </script>
+</head>
+<body onload="getMap();">
+    <div id="pms-wrapper">
+        <div id="pms-header"></div>
+        <div id="pms-body">
+            <div id="pms-map">
+                <h4>Schematic map of Infosys Bhubaneswar DC</h4>
+                <div id="divMap"></div>
+            </div>
+        </div>
+        <div id="pms-footer"></div>
+    </div>
+</body>
+</html>

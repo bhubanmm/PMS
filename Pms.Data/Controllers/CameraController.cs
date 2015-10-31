@@ -27,12 +27,16 @@ namespace Pms.Data.Controllers
     builder.EntitySet<Parking>("Parkings"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [EnableCors(origins: "http://localhost:59161", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CameraController : ODataController
     {
         private pmsEntities db = new pmsEntities();
 
         // GET: odata/Camera
+        /// <summary>
+        /// Gets the cameras.
+        /// </summary>
+        /// <returns>A list of cameras.</returns>
         [EnableQuery]
         public IQueryable<Camera> GetCamera()
         {
@@ -40,6 +44,11 @@ namespace Pms.Data.Controllers
         }
 
         // GET: odata/Camera(5)
+        /// <summary>
+        /// Gets the camera object for the provided key.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <returns>The Camera object.</returns>
         [EnableQuery]
         public SingleResult<Camera> GetCamera([FromODataUri] long key)
         {
@@ -47,6 +56,12 @@ namespace Pms.Data.Controllers
         }
 
         // PUT: odata/Camera(5)
+        /// <summary>
+        /// Puts the specified camera object.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <param name="patch">The patch/delta of camera object.</param>
+        /// <returns>The Camera object.</returns>
         public async Task<IHttpActionResult> Put([FromODataUri] long key, Delta<Camera> patch)
         {
             Validate(patch.GetEntity());
@@ -84,6 +99,11 @@ namespace Pms.Data.Controllers
         }
 
         // POST: odata/Camera
+        /// <summary>
+        /// Posts the specified camera object.
+        /// </summary>
+        /// <param name="camera">The camera object.</param>
+        /// <returns>The Camera object.</returns>
         public async Task<IHttpActionResult> Post(Camera camera)
         {
             if (!ModelState.IsValid)
@@ -123,6 +143,12 @@ namespace Pms.Data.Controllers
         }
 
         // PATCH: odata/Camera(5)
+        /// <summary>
+        /// Patches the specified camera object.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <param name="patch">The patch/delta of camera object.</param>
+        /// <returns>The camera object.</returns>
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] long key, Delta<Camera> patch)
         {
@@ -161,6 +187,11 @@ namespace Pms.Data.Controllers
         }
 
         // DELETE: odata/Camera(5)
+        /// <summary>
+        /// Deletes the specified camera.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <returns>The HTTP Status Code.</returns>
         public async Task<IHttpActionResult> Delete([FromODataUri] long key)
         {
             Camera camera = await db.Cameras.FindAsync(key);
@@ -176,12 +207,21 @@ namespace Pms.Data.Controllers
         }
 
         // GET: odata/Camera(5)/Parking
+        /// <summary>
+        /// Gets the parking related to a particular Camera.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <returns>A Parking object.</returns>
         [EnableQuery]
         public SingleResult<Parking> GetParking([FromODataUri] long key)
         {
             return SingleResult.Create(db.Cameras.Where(m => m.CameraId == key).Select(m => m.Parking));
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -191,6 +231,11 @@ namespace Pms.Data.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Does the Camera the exists.
+        /// </summary>
+        /// <param name="key">The unique key.</param>
+        /// <returns><c>true</c> if the camera exists, else <c>false</c></returns>
         private bool CameraExists(long key)
         {
             return db.Cameras.Count(e => e.CameraId == key) > 0;

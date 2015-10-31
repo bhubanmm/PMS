@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Pms.Data.WebApiConfig">
+    <Position X="0.5" Y="5.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\WebApiConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.WebApiApplication">
+    <Position X="3.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.Controllers.CameraController">
+    <Position X="6.75" Y="4" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgCAQAAAAAAAAIAAACAEAQAAAAAAAAEAAAAg=</HashCode>
+      <FileName>Controllers\CameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.Controllers.ParkingController">
+    <Position X="6.75" Y="0.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAQAAAAAAAAAAAACAEAQEAAAAAAAEAAAAg=</HashCode>
+      <FileName>Controllers\ParkingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.Models.pmsEntities">
+    <Position X="0.5" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PmsModel.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.Models.Camera">
+    <Position X="3.75" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAQAAg=</HashCode>
+      <FileName>Models\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pms.Data.Models.Parking">
+    <Position X="0.5" Y="2.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAEAAQAAAAAAAAAABAAEAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Models\Parking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

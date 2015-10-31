@@ -1,0 +1,57 @@
+﻿<div class="logo">
+    <span><i>smart</i> <small>PARKING</small></span>
+</div>
+<div id="pms-nav" class="pms-nav">
+    <ul class="nav">
+        <li>
+            <a href="#">Administration</a>
+            <ul>
+                <li>
+                    <a href="parking.html">Manage Parking</a>
+                </li>
+                <li>
+                    <a href="camera.html">Manage Camera</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="openAboutDialog()">About</a>
+        </li>
+    </ul>
+</div>
+<div class="clear-float"></div>
+<div id="modal"></div>
+<script type="text/javascript">
+    $(document).ready(
+        /* This is the function that will get executed after the DOM is fully loaded */
+        function () {
+            /* Next part of code handles hovering effect and submenu appearing */
+            $('.nav li').hover(
+                function () { //appearing on hover
+                    $('ul', this).fadeIn();
+                },
+                function () { //disappearing on hover
+                    $('ul', this).fadeOut();
+                }
+            );
+        }
+    );
+
+    function openAboutDialog() {
+        $("#modal").load('about.html').dialog({
+            modal: true,
+            dialogClass: "no-close",
+            //hide: { effect: "explode", duration: 1000 },
+            minWidth: 600,
+            buttons: [
+              {
+                  text: "OK",
+                  click: function () {
+                      $(this).dialog("close");
+                  }
+              }
+            ],
+            title: "About"
+        });
+    }
+</script>
