@@ -77,6 +77,7 @@
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Properties\PublishProfiles\bhubanmishra.pubxml" />
+    <None Include="Properties\PublishProfiles\pmsclient.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

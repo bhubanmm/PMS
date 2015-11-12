@@ -23,11 +23,11 @@
         <div id="pms-footer"></div>
     </div>
     <script type="text/javascript">
-        var API_URL = "http://localhost:60954/odata/Camera";
+        var API_URL = "http://pmsdata.azurewebsites.net/odata/Camera";
         //grid = $("#gridMain");
 
         $(document).ready(function () {
-            $.getJSON("http://localhost:60954/odata/Parking", function (data) {
+            $.getJSON("http://pmsdata.azurewebsites.net/odata/Parking", function (data) {
                 var parkingList = '';
                 $.each(data.value, function (idx, item) {
                     parkingList += item.ParkingID + ":" + item.ParkingName + ";";

@@ -33,6 +33,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>&lt;Objects&gt;&lt;ObjectGroup Name="pmsEntities-Deployment" Order="1"&gt;&lt;Destination Path="" /&gt;&lt;Object Type="DbFullSql"&gt;&lt;PreSource Path="data source=&amp;quot%3b|DataDirectory|\pms.sqlite&amp;quot%3b%3bpassword=Infosys123" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" /&gt;&lt;Source Path="obj\Debug\AutoScripts\pmsEntities-Deployment_SchemaAndData.sql" Transacted="True" /&gt;&lt;/Object&gt;&lt;/ObjectGroup&gt;&lt;/Objects&gt;</PublishDatabaseSettings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -128,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="index.html" />
     <Content Include="Models\PmsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PmsModel.edmx</DependentUpon>
@@ -179,12 +182,10 @@
     <Content Include="Models\PmsModel.edmx.diagram">
       <DependentUpon>PmsModel.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Data\pms.sqlite">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Pms.Data.cd" />
-    <Content Include="ClassDiagram1.cd" />
+    <Content Include="App_Data\pms.sqlite" />
+    <None Include="Pms.Data.cd" />
     <None Include="Properties\PublishProfiles\bhubanmishra.pubxml" />
+    <None Include="Properties\PublishProfiles\pmsdata.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
