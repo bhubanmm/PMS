@@ -69,7 +69,6 @@
     <Content Include="about.html" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\logo.png" />
-    <Content Include="dashboard.html" />
     <Content Include="footer.html" />
     <Content Include="header.html" />
     <Content Include="index.html" />

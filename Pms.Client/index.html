@@ -22,6 +22,69 @@
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
     <script type="text/javascript">
         var map = null;
+        var defaultContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>";
+
+        var p1 = getPushPin(20.3423, 85.804);
+        var p2 = getPushPin(20.34285, 85.8035);
+        var p3 = getPushPin(20.34285, 85.802);
+        var p3 = getPushPin(20.34285, 85.802);
+        var p4 = getPushPin(20.3426, 85.8009);
+        var p5 = getPushPin(20.3415, 85.8009);
+        var p6 = getPushPin(20.3402, 85.8009);
+        var p7 = getPushPin(20.3393, 85.802);
+        var p8 = getPushPin(20.3399, 85.8035);
+        var p9 = getPushPin(20.34095, 85.802);
+
+        function getPushPin(lat, lon) {
+            return new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(lat, lon),
+                {
+                    width: null,
+                    height: null,
+                    htmlContent: defaultContent
+                });
+        }
+
+        function getParkingData(parkingId, pushPin) {
+            var API_URL = "http://pmsdata.azurewebsites.net/odata/Parking";
+            var grid = $("#gridMain");
+
+            $.ajax({
+                url: API_URL + "(" + parkingId + ")",
+                success: function (result) {
+                    if (result != null) {
+                        var pinContent;
+                        var totalSlots = parseInt(result.TotalSlots);
+                        var slotsUnderMaintenance = parseInt(result.SlotsUnderMaintenance);
+                        var slotsOccupied = parseInt(result.SlotsOccupied);
+                        var remainingSlots = totalSlots - slotsUnderMaintenance - slotsOccupied;
+
+                        if (remainingSlots < 0) {
+                            remainingSlots = 0;
+                        }
+
+                        map.entities.remove(pushPin);
+                        if (remainingSlots == 0) {
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>";
+                        } else if (remainingSlots < 10) {
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:Yellow;width:20px;'>" + remainingSlots + "</div>";
+                        } else {
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>" + remainingSlots + "</div>";
+                        }
+
+                        pushPin = new Microsoft.Maps.Pushpin(pushPin.getLocation(), {
+                            width: null,
+                            height: null,
+                            htmlContent: pinContent
+                        });
+                        map.entities.push(pushPin);
+                    }
+                },
+                error: function (xhr) {
+                    console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+                }
+            });
+        }
 
         function getMap() {
             map = new Microsoft.Maps.Map(document.getElementById('divMap'), {
@@ -53,95 +116,31 @@
             });
             map.entities.push(gate2);
 
-            var p1 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3423, 85.804),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>10</div>"
-                });
             map.entities.push(p1);
-
-            var p2 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.34285, 85.8035),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
-                });
             map.entities.push(p2);
-
-            var p3 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.34285, 85.802),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
-                });
             map.entities.push(p3);
-
-            var p3 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.34285, 85.802),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
-                });
             map.entities.push(p3);
-
-            var p4 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3426, 85.8009),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>20</div>"
-                });
             map.entities.push(p4);
-
-            var p5 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3415, 85.8009),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>15</div>"
-                });
             map.entities.push(p5);
-
-            var p6 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3402, 85.8009),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>25</div>"
-                });
             map.entities.push(p6);
-
-            var p7 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3393, 85.802),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>17</div>"
-                });
             map.entities.push(p7);
-
-            var p8 = new Microsoft.Maps.Pushpin(
-                new Microsoft.Maps.Location(20.3399, 85.8035),
-                {
-                    width: null,
-                    height: null,
-                    htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
-                });
             map.entities.push(p8);
-
-            var p9 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(20.34095, 85.802), {
-                width: null,
-                height: null,
-                htmlContent: "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>"
-            });
             map.entities.push(p9);
         }
 
+        $(document).ready(function () {
+            setInterval(function () {
+                getParkingData(2, p1);
+                getParkingData(3, p2);
+                getParkingData(4, p3);
+                getParkingData(5, p4);
+                getParkingData(6, p5);
+                getParkingData(7, p6);
+                getParkingData(8, p7);
+                getParkingData(9, p8);
+                getParkingData(10, p9);
+            }, 5000);
+        });
     </script>
 </head>
 <body onload="getMap();">
