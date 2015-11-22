@@ -22,20 +22,20 @@
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
     <script type="text/javascript">
         var map = null;
-        var defaultContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>";
+        var defaultContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:40px;'>0</div>";
 
-        var p1 = getPushPin(20.3423, 85.804);
-        var p2 = getPushPin(20.34285, 85.8035);
-        var p3 = getPushPin(20.34285, 85.802);
-        var p3 = getPushPin(20.34285, 85.802);
-        var p4 = getPushPin(20.3426, 85.8009);
-        var p5 = getPushPin(20.3415, 85.8009);
-        var p6 = getPushPin(20.3402, 85.8009);
-        var p7 = getPushPin(20.3393, 85.802);
-        var p8 = getPushPin(20.3399, 85.8035);
-        var p9 = getPushPin(20.34095, 85.802);
+        var p1 = createPushPin(20.3423, 85.804);
+        var p2 = createPushPin(20.34285, 85.8035);
+        var p3 = createPushPin(20.34285, 85.802);
+        var p3 = createPushPin(20.34285, 85.802);
+        var p4 = createPushPin(20.3426, 85.8009);
+        var p5 = createPushPin(20.3415, 85.8009);
+        var p6 = createPushPin(20.3402, 85.8009);
+        var p7 = createPushPin(20.3393, 85.802);
+        var p8 = createPushPin(20.3399, 85.8035);
+        var p9 = createPushPin(20.34095, 85.802);
 
-        function getPushPin(lat, lon) {
+        function createPushPin(lat, lon) {
             return new Microsoft.Maps.Pushpin(
                 new Microsoft.Maps.Location(lat, lon),
                 {
@@ -43,6 +43,18 @@
                     height: null,
                     htmlContent: defaultContent
                 });
+        }
+
+        function getPinIdxByLocation(location) {
+            for (var i = 0; i < map.entities.getLength(); i++) {
+                var entity = map.entities.get(i);
+
+                if (entity.getLocation() == location) {
+                    return i;
+                }
+            }
+
+            return null;
         }
 
         function getParkingData(parkingId, pushPin) {
@@ -63,13 +75,13 @@
                             remainingSlots = 0;
                         }
 
-                        map.entities.remove(pushPin);
+                        map.entities.removeAt(getPinIdxByLocation(pushPin.getLocation()));
                         if (remainingSlots == 0) {
-                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:20px;'>0</div>";
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightSalmon;width:40px;'>" + result.ParkingName + ": " + remainingSlots + "</div>";
                         } else if (remainingSlots < 10) {
-                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:Yellow;width:20px;'>" + remainingSlots + "</div>";
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:Yellow;width:40px;'>" + result.ParkingName + ": " + remainingSlots + "</div>";
                         } else {
-                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:20px;'>" + remainingSlots + "</div>";
+                            pinContent = "<div style='font-size:12px;border:solid 1px;background-color:LightGreen;width:40px;'>" + result.ParkingName + ": " + remainingSlots + "</div>";
                         }
 
                         pushPin = new Microsoft.Maps.Pushpin(pushPin.getLocation(), {
