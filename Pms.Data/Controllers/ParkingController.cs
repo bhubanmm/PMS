@@ -98,10 +98,17 @@ namespace Pms.Data.Controllers
             }
             else
             {
-                oParking.ParkingName = parking.ParkingName;
-                oParking.SlotsOccupied = parking.SlotsOccupied;
-                oParking.SlotsUnderMaintenance = parking.SlotsUnderMaintenance;
-                oParking.TotalSlots = parking.TotalSlots;
+                if (parking.ParkingName != null)
+                    oParking.ParkingName = parking.ParkingName;
+
+                if (parking.SlotsOccupied != null)
+                    oParking.SlotsOccupied = parking.SlotsOccupied;
+
+                if (parking.SlotsUnderMaintenance != null)
+                    oParking.SlotsUnderMaintenance = parking.SlotsUnderMaintenance;
+
+                if (parking.TotalSlots != null)
+                    oParking.TotalSlots = parking.TotalSlots;
             }
 
             try
